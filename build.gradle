@@ -1,0 +1,14 @@
+plugins {
+    id 'java'
+}
+
+apply from: 'build.core.gradle'
+
+dependencies {
+    compileOnly files("libs/titanium.jar")
+    runtimeOnly files("libs/titanium.jar")
+
+    compileOnly "org.slf4j:slf4j-api:${project.slf4j_version}"
+
+    runtimeOnly "ch.qos.logback:logback-classic:${project.logback_version}"
+}
