@@ -1,34 +1,40 @@
 package net.hyperj.tests.result;
 
-import static net.hyperj.testing.Testing.*;
+import static net.hyperj.testing.HyperTesting.*;
 
-import net.hyperj.result.*;
+import net.hyperj.result.JResult;
+import net.hyperj.result.Result;
 
 @SuppressWarnings("unused")
 public class JResultTest {
     private static final Exception EXCEPTION = new IllegalStateException("Illegal State ;)");
     private static final Object GOOD = 69;// ;)
-    @Test
+
+    @Test("Make sure if an error is provided it will return true on 'isError'")
     private static void isErrorTest() {
         Result<Object> result = JResult.fail(EXCEPTION);
         assert$(result.isError());
     }
-    @Test
+
+    @Test("Make sure if a good value is provided it will return true on 'isSuccess'")
     private static void isSuccessTest() {
         Result<Object> result = JResult.success(GOOD);
         assert$(result.isSuccess());
     }
-    @Test
+
+    @Test("Make sure if an error is provided it will return the error via 'getError'")
     private static void getErrorTest() {
         Result<Object> result = JResult.fail(EXCEPTION);
         assertEQ(result.getError(), EXCEPTION);
     }
-    @Test
+
+    @Test("Make sure get() actually returns the expected value")
     private static void getTest1() {
         Result<Object> result = JResult.success(GOOD);
         assertEQ(result.get(), GOOD);
     }
-    @Test
+
+    @Test("Make sure get() throws an exception")
     private static void getTest2() {
         try {
             Result<Object> result = JResult.fail(EXCEPTION);

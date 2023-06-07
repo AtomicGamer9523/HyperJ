@@ -6,8 +6,7 @@ repositories {
 }
 
 dependencies {
-    testImplementation files("libs/titanium.jar")
-    testImplementation "org.mockito:mockito-core:${project.mockito_version}"
+//    testImplementation "org.mockito:mockito-core:${project.mockito_version}"
 
     testRuntimeOnly files("libs/titanium.jar")
 }

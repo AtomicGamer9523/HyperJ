@@ -2,9 +2,6 @@ package net.hyperj.injections;
 
 import net.hyperj.result.*;
 
-import java.util.*;
-
-@SuppressWarnings("all")// To many warnings ;)
 public class SecurityManagerInjection {
     private static SecurityManagerInjection INSTANCE;
 
@@ -14,19 +11,22 @@ public class SecurityManagerInjection {
     }
 
     private boolean securityManagerCurrentlyEnabled;
-    private final Optional<SecurityManager> originalSecurityManagerState;
+    @SuppressWarnings("removal")
+    private final SecurityManager originalSecurityManagerState;
 
+    @SuppressWarnings("removal")
     private SecurityManagerInjection() {
-        SecurityManager securityManager = System.getSecurityManager();
-        originalSecurityManagerState = Optional.ofNullable(securityManager);
+        originalSecurityManagerState = System.getSecurityManager();
         updateState();
     }
 
+    @SuppressWarnings("removal")
     private void updateState() {
         securityManagerCurrentlyEnabled = System.getSecurityManager() != null;
     }
 
-    public <R> Result<R> runBypass(BypassableFunction<R> f) {
+    @SuppressWarnings("removal")
+    public <R> Result<R> runBypass(Func<R> f) {
         updateState();
         try {
             R res = f.apply();
@@ -36,7 +36,7 @@ public class SecurityManagerInjection {
             if (securityManagerCurrentlyEnabled) {
                 System.setSecurityManager(null);
                 Result<R> res = runBypass(f);
-                System.setSecurityManager(originalSecurityManagerState.orElse(null));
+                System.setSecurityManager(originalSecurityManagerState);
                 return res;
             }
             return JResult.fail(new IllegalStateException(
@@ -46,7 +46,7 @@ public class SecurityManagerInjection {
     }
 
     @FunctionalInterface
-    public interface BypassableFunction<R> {
+    public interface Func<R> {
         R apply() throws Exception;
     }
 }

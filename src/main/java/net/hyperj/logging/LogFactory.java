@@ -8,7 +8,7 @@ public class LogFactory {
         return getLogger(clazz.getSimpleName());
     }
     public static Logger getLogger(String name) {
-        return LoggerFactory.getLogger("HyperJ.");
+        return LoggerFactory.getLogger("HyperJ."+name);
     }
     public static Logger getLogger() {
         return LoggerFactory.getLogger("HyperJ");

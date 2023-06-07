@@ -75,12 +75,14 @@ public class DefaultInjection<I> implements PriorityInjection {
                 reflectionParams[i] = params[i].getClass();
             }
         }
-        return JResult.runUnchecked(() -> {
-            Object res = ReflectInjector.getPrivateMethodWithPriority(
-                this.priority, this.clazz, this.obj, methodName, reflectionParams
-            ).getOrThrow().call(params).getOrThrow();
-            if (res == null) return JVoid.get();
-            return res;
-        });
+        return JResult.asNewType(
+            JResult.runUnchecked(() -> {
+                Object res = ReflectInjector.getPrivateMethodWithPriority(
+                    this.priority, this.clazz, this.obj, methodName, reflectionParams
+                ).getOrThrow().call(params).getOrThrow();
+                if (res == null) return JVoid.get();
+                return res;
+            })
+        );
     }
 }

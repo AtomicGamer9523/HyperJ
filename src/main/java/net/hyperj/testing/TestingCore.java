@@ -6,47 +6,50 @@ import org.slf4j.Logger;
 import java.lang.reflect.*;
 import java.util.*;
 
-public class TestingCore {
-    static final Logger LOG = LogFactory.getLogger(Testing.class);
-    static Method[] getTestingMethods(Class<?> clazz) {
+public final class TestingCore {
+    static final Logger LOG = LogFactory.getLogger(HyperTesting.class);
+    private record Test(Method method, String description) {}
+    static Test[] getTestingMethods(Class<?> clazz) {
         LOG.trace("Adding Tests from class '" + clazz.getName() + "'");
         Method[] methods = clazz.getDeclaredMethods();
-        ArrayList<Method> res = new ArrayList<>();
+        ArrayList<Test> res = new ArrayList<>();
         for (Method method : methods) {
-            if (isMethodOk(method)) {
-                res.add(method);
-            }
+            Optional<String> m = isMethodOk(method);
+            m.ifPresent(s -> res.add(new Test(method, s)));
         }
-        Method[] output = new Method[res.size()];
+        Test[] output = new Test[res.size()];
         res.toArray(output);
         return output;
     }
-    static boolean isMethodOk(Method method) {
-        if (!method.isAnnotationPresent(Testing.Test.class)) return false;
-        return method.getParameters().length == 0;
+    static Optional<String> isMethodOk(Method method) {
+        if (!method.isAnnotationPresent(HyperTesting.Test.class)) return Optional.empty();
+        if (method.getParameters().length != 0) return Optional.empty();
+        String description = method.getAnnotation(HyperTesting.Test.class).value();
+        return Optional.of(description);
     }
-    static Testing.TestingResult runTests(ArrayList<Class<?>> classQueue) {
-        ArrayList<Testing.FailedTest> errorsQueue = new ArrayList<>();
+    static HyperTesting.TestingResult runTests(ArrayList<Class<?>> classQueue) {
+        ArrayList<HyperTesting.FailedTest> errorsQueue = new ArrayList<>();
         for (Class<?> clazz : classQueue) {
             LOG.debug("Testing: '" + clazz.getName() + "'");
-            Method[] methods = getTestingMethods(clazz);
+            Test[] methods = getTestingMethods(clazz);
             LOG.debug("Number of Tests: " + methods.length);
-            for (Method f : methods) {
-                LOG.debug("Testing '" + clazz.getName() + "." + f.getName() + "'");
+            for (Test f : methods) {
+                LOG.debug("Testing '" + clazz.getName() + "." + f.method.getName() + "'");
                 try {
-                    f.setAccessible(true);
-                    f.invoke(null);
+                    f.method.setAccessible(true);
+                    f.method.invoke(null);
                 } catch (Exception e) {
-                    Testing.FailedTest fail = new Testing.FailedTest(clazz.getName(), f.getName(), e);
-                    LOG.warn("Test: '"+ fail.fullName()+"' raised an exception!");
+                    HyperTesting.FailedTest fail = new HyperTesting.FailedTest(
+                        clazz.getName(), f.description, f.method.getName(), e
+                    );
+                    LOG.warn("Test: '"+ fail.full()+"' raised an exception!");
                     errorsQueue.add(fail);
                 }
             }
-            LOG.trace("Done testing: '" + clazz.getName() + "'");
         }
-        Testing.FailedTest[] fails = new Testing.FailedTest[errorsQueue.size()];
+        HyperTesting.FailedTest[] fails = new HyperTesting.FailedTest[errorsQueue.size()];
         classQueue.clear();
         errorsQueue.toArray(fails);
-        return new Testing.TestingResult(fails);
+        return new HyperTesting.TestingResult(fails);
     }
 }
