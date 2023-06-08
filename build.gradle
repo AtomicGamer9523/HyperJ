@@ -6,6 +6,10 @@ group "net.hyperj"
 version "1.0.0"
 
 repositories {
+    maven {
+        name = 'Atomic'
+        url = 'https://www.github.linkrbot.com/packages/'
+    }
     mavenCentral()
 }
 
@@ -14,7 +18,7 @@ dependencies {
 
     runtimeOnly "ch.qos.logback:logback-classic:${project.logback_version}"
 
-    testRuntimeOnly files("libs/titanium.jar")
+    testRuntimeOnly "net.titanium:titanium:0.1.0"
 }
 
 tasks.withType(JavaCompile).configureEach {
