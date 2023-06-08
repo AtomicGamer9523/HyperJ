@@ -1,13 +1,10 @@
 package net.hyperj.injections;
 
-import net.hyperj.logging.LogFactory;
+import net.hyperj.util.*;
 
 import org.slf4j.Logger;
 
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.File;
+import java.io.*;
 
 public class HyperClassLoader extends ClassLoader {
     private final Logger logger;
@@ -15,7 +12,7 @@ public class HyperClassLoader extends ClassLoader {
     public HyperClassLoader(ClassLoader parent, String threadName) {
         super(HyperClassLoader.class.getSimpleName(), parent);
         assert registerAsParallelCapable();
-        this.logger = LogFactory.getLogger(threadName);
+        this.logger = LoggerUtil.getLogger(threadName);
     }
 
     public HyperClassLoader(String threadName) {

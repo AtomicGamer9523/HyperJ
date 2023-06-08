@@ -1,6 +1,4 @@
-package net.hyperj.jhell;
-
-import net.hyperj.result.Result;
+package net.hyperj;
 
 public interface Injection {
     /**
@@ -26,7 +24,7 @@ public interface Injection {
 
     /**
      * Calls the function and returns it's output.<br>
-     * <b>CAN BE {@link net.hyperj.misc.JVoid VOID}! DON'T FORGET TO {@link Result#isVoid() CHECK}</b><br>
+     * <b>CAN BE {@link JVoid VOID}! DON'T FORGET TO {@link Result#isVoid() CHECK}</b><br>
      * Only static methods can be called if you injected into a {@link Class class}.
      * Otherwise, you can call to both static and instance variables.
      *

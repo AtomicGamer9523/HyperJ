@@ -1,11 +1,10 @@
-package net.hyperj.jhell;
+package net.hyperj.util;
 
 /**
  * A Dummy Object that is used purely for joking around ;)
  */
 @SuppressWarnings("all")
-public class DummyObject {
-    @DoNotReveal(priority = 1000)
+public final class DummyObject {
     private static DummyObject INSTANCE;
 
     public static DummyObject getInstance() {
@@ -16,9 +15,7 @@ public class DummyObject {
         INSTANCE = new DummyObject(0);
     }
 
-    @DoNotReveal(priority = 50)
     private int priorityState = 69420;
-    @DoNotReveal(priority = 50)
     private int getPriorityState() {
         return priorityState;
     }

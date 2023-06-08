@@ -1,9 +1,9 @@
-package net.hyperj.tests.result;
+package net.hyperj.util;
 
 import static net.hyperj.testing.HyperTesting.*;
 
-import net.hyperj.result.JResult;
-import net.hyperj.result.Result;
+import net.hyperj.util.*;
+import net.hyperj.*;
 
 @SuppressWarnings("unused")
 public class JResultTest {

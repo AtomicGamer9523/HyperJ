@@ -1,13 +1,14 @@
 package net.hyperj.testing;
 
-import net.hyperj.logging.LogFactory;
+import net.hyperj.util.*;
+
 import org.slf4j.Logger;
 
 import java.lang.reflect.*;
 import java.util.*;
 
-public final class TestingCore {
-    static final Logger LOG = LogFactory.getLogger(HyperTesting.class);
+public class TestingCore {
+    static final Logger LOG = LoggerUtil.getLogger(HyperTesting.class);
     private record Test(Method method, String description) {}
     static Test[] getTestingMethods(Class<?> clazz) {
         LOG.trace("Adding Tests from class '" + clazz.getName() + "'");

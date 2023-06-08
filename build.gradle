@@ -2,13 +2,22 @@ plugins {
     id 'java'
 }
 
-apply from: 'build.core.gradle'
+group "net.hyperj"
+version "1.0.0"
+
+repositories {
+    mavenCentral()
+}
 
 dependencies {
-    compileOnly files("libs/titanium.jar")
-    runtimeOnly files("libs/titanium.jar")
-
     compileOnly "org.slf4j:slf4j-api:${project.slf4j_version}"
 
     runtimeOnly "ch.qos.logback:logback-classic:${project.logback_version}"
+
+    testRuntimeOnly files("libs/titanium.jar")
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.encoding("UTF-8")
+    it.options.compilerArgs += ["-Xlint:none"]
 }

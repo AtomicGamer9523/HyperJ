@@ -1,13 +1,9 @@
 package net.hyperj.injections;
 
-import net.hyperj.jhell.DoNotReveal;
-
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.*;
 
 public class HyperThread extends Thread {
-    @DoNotReveal(priority = 1000)
     private static final AtomicInteger LATEST_USED = new AtomicInteger(-1);
-    @DoNotReveal(priority = 1000)
     private static int getNextAvailableID() {
         return LATEST_USED.addAndGet(1);
     }

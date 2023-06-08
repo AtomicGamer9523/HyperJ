@@ -1,9 +1,11 @@
-package net.hyperj.tests;
+package net.hyperj;
 
 import static net.hyperj.testing.HyperTesting.*;
 
-import net.hyperj.tests.result.*;
-import net.hyperj.tests.jhell.*;
+import net.hyperj.injections.ReflectInjectorTest;
+import net.hyperj.tests.util.*;
+import net.hyperj.tests.injections.*;
+import net.hyperj.util.JResultTest;
 
 public class Tests {
     private static final Testing TESTS = initTesting();
@@ -12,10 +14,9 @@ public class Tests {
         TESTS.add(JResultTest.class);
 
         // JHell
-        TESTS.add(InjectorTest.class);
-        TESTS.add(PriorityInjectorTest.class);
+        TESTS.add(ReflectInjectorTest.class);
 
         // End
-        TESTS.run().finish();
+        TESTS.run().finishVerbose();
     }
 }

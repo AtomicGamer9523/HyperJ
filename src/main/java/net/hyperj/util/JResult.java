@@ -1,11 +1,11 @@
-package net.hyperj.result;
+package net.hyperj.util;
 
-import net.hyperj.misc.JVoid;
+import net.hyperj.*;
 
 import java.util.function.*;
 import java.util.*;
 
-public final class JResult<S> implements Result<S> {
+public class JResult<S> implements Result<S> {
     /**
      * Create a successful Result.
      *
@@ -14,6 +14,17 @@ public final class JResult<S> implements Result<S> {
      */
     public static <S> Result<S> success(S s) {
         return new JResult<>(null, Objects.requireNonNull(s));
+    }
+
+    /**
+     * Create either a successful or unsuccessful Result.
+     *
+     * @param s the result value, can be null
+     * @return a maybe successful maybe not result
+     */
+    public static <S> Result<S> some(S s) {
+        if (s != null) return success(s);
+        return fail(new NullPointerException("passed value was null"));
     }
 
     /**
@@ -32,15 +43,18 @@ public final class JResult<S> implements Result<S> {
      * will be successful. If an exception is thrown, the
      * Result will be a failure.
      *
-     * @param s the value supplier.
+     * @param f the value supplier.
      * @return the Result.
      */
-    public static <S> Result<S> from(ThrowingSupplier<S> s) {
-        Objects.requireNonNull(s);
+    @SuppressWarnings("unchecked")
+    public static <S> Result<S> from(ThrowingSupplier<S> f) {
         try {
-            return success(s.get());
-        } catch (Exception t) {
-            return fail(t);
+            assert f != null;
+            S res = f.get();
+            if (res == null) return JResult.success((S) JVoid.get());
+            return JResult.success(res);
+        } catch (Exception e) {
+            return JResult.fail(e);
         }
     }
 
@@ -159,17 +173,6 @@ public final class JResult<S> implements Result<S> {
         }
     }
 
-    @SuppressWarnings("unchecked")
-    public static <R> Result<R> runUnchecked(UncheckedFunction<R> f) {
-        try {
-            R res = f.get();
-            if (res == null) return JResult.success((R) JVoid.get());
-            return JResult.success(res);
-        } catch (Exception e) {
-            return JResult.fail(e);
-        }
-    }
-
     @Override
     public String toString() {
         if (isSuccess()) {
@@ -180,7 +183,7 @@ public final class JResult<S> implements Result<S> {
     }
 
     @FunctionalInterface
-    public interface UncheckedFunction<R> {
-        R get() throws Exception;
+    public interface ThrowingSupplier<S> {
+        S get() throws Exception;
     }
 }

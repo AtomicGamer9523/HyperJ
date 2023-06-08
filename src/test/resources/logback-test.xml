@@ -8,7 +8,7 @@
         </encoder>
     </appender>
     <!-- Level can be: 'trace', 'debug', 'info', 'warn', and 'error' -->
-    <root level="trace">
+    <root level="debug">
         <appender-ref ref="COLOR" />
     </root>
 </configuration>

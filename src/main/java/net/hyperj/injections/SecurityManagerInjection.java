@@ -1,6 +1,7 @@
 package net.hyperj.injections;
 
-import net.hyperj.result.*;
+import net.hyperj.util.*;
+import net.hyperj.*;
 
 public class SecurityManagerInjection {
     private static SecurityManagerInjection INSTANCE;
@@ -30,7 +31,7 @@ public class SecurityManagerInjection {
         updateState();
         try {
             R res = f.apply();
-            return JResult.success(res);
+            return JResult.some(res);
         } catch (Exception e) {
             if (!(e instanceof SecurityException)) return JResult.fail(e);
             if (securityManagerCurrentlyEnabled) {

@@ -1,12 +1,7 @@
 package net.hyperj.testing;
 
-import net.hyperj.jhell.DoNotReveal;
-
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
-import java.util.ArrayList;
+import java.lang.annotation.*;
+import java.util.*;
 
 /**
  * A simple testing thing I made
@@ -27,7 +22,8 @@ import java.util.ArrayList;
  * }
  * }</pre>
  */
-public final class HyperTesting {
+@SuppressWarnings("unused")
+public class HyperTesting {
     /**
      * Asserts that the statement is true
      *
@@ -67,10 +63,8 @@ public final class HyperTesting {
      * The Testing Infrastructure. For example see {@link HyperTesting this}
      */
     public static final class Testing {
-        @DoNotReveal(priority = 100)
         private final ArrayList<Class<?>> classQueue = new ArrayList<>();
 
-        @DoNotReveal(priority = 1000)
         private Testing() {
             TestingCore.LOG.debug(
                 "Initialized a new testing environment! Thread: '" +
@@ -112,10 +106,19 @@ public final class HyperTesting {
          * Exit code is the amount of tests failed
          */
         public void finish() {
+            finish(false);
+        }
+
+        /**
+         * Finishes printing all the failed tests as warnings, and the descriptions with exceptions
+         * Exit code is the amount of tests failed
+         */
+        public void finishVerbose() {
             for (FailedTest fail : this.failedTests) {
-                fail.logAsError();
+                fail.reason.printStackTrace();
             }
-            silentFinish();
+            finish(true);
+
         }
 
         /**
@@ -125,9 +128,16 @@ public final class HyperTesting {
         public void silentFinish() {
             System.exit(this.failedTests.length);
         }
+
+        private void finish(boolean verbose) {
+            for (FailedTest fail : this.failedTests) {
+                fail.logAsError();
+                if(verbose) fail.logAsDescriptionError();
+            }
+            silentFinish();
+        }
     }
 
-    @SuppressWarnings("unused")
     public record FailedTest(String className, String description, String methodName, Exception reason) {
         /**
          * Gets the full identification of the failed function

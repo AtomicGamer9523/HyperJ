@@ -1,6 +1,4 @@
-package net.hyperj.result;
-
-import net.hyperj.misc.JVoid;
+package net.hyperj;
 
 import java.util.function.*;
 import java.util.*;
