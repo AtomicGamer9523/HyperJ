@@ -1,7 +1,7 @@
-package net.hyperj;
+package dev.matveit.hyperj;
 
-import net.hyperj.injections.*;
-import net.hyperj.util.*;
+import dev.matveit.hyperj.injections.*;
+import dev.matveit.hyperj.util.*;
 
 import org.slf4j.Logger;
 

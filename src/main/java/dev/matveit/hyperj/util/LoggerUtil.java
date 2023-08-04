@@ -1,8 +1,8 @@
-package net.hyperj.util;
+package dev.matveit.hyperj.util;
 
-import net.hyperj.HyperJ;
-import org.slf4j.Logger;
+import dev.matveit.hyperj.HyperJ;
 import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 public final class LoggerUtil {
     private static final String NAME = HyperJ.class.getSimpleName();

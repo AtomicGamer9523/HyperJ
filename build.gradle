@@ -3,12 +3,12 @@ plugins {
 }
 
 group "net.hyperj"
-version "1.0.0"
+version "2.0.0"
 
 repositories {
     maven {
         name = 'Atomic'
-        url = 'https://www.github.linkrbot.com/packages/'
+        url = 'https://gh.matveit.dev/pkgs'
     }
     mavenCentral()
 }
@@ -16,9 +16,8 @@ repositories {
 dependencies {
     compileOnly "org.slf4j:slf4j-api:${project.slf4j_version}"
 
-    runtimeOnly "ch.qos.logback:logback-classic:${project.logback_version}"
-
-    testRuntimeOnly "net.titanium:titanium:0.1.0"
+    testRuntimeOnly "ch.qos.logback:logback-classic:${project.logback_version}"
+    testRuntimeOnly "net.titanium:Titanium:0.1.0"
 }
 
 tasks.withType(JavaCompile).configureEach {

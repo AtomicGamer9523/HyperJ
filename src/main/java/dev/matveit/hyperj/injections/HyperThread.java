@@ -1,4 +1,4 @@
-package net.hyperj.injections;
+package dev.matveit.hyperj.injections;
 
 import java.util.concurrent.atomic.*;
 

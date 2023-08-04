@@ -1,4 +1,4 @@
-package net.hyperj;
+package dev.matveit.hyperj;
 
 import java.util.function.*;
 import java.util.*;

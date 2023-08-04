@@ -1,9 +1,8 @@
-package net.hyperj.injections;
+package dev.matveit.hyperj.injections;
 
-import static net.hyperj.testing.HyperTesting.*;
-
-import net.hyperj.util.*;
-import net.hyperj.*;
+import static dev.matveit.hyperj.testing.HyperTesting.*;
+import dev.matveit.hyperj.util.*;
+import dev.matveit.hyperj.*;
 
 @SuppressWarnings("unused")
 public class ReflectInjectorTest {

@@ -1,4 +1,4 @@
-package net.hyperj.util;
+package dev.matveit.hyperj.util;
 
 /**
  * A Dummy Object that is used purely for joking around ;)

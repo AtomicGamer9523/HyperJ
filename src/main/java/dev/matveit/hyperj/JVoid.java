@@ -1,4 +1,4 @@
-package net.hyperj;
+package dev.matveit.hyperj;
 
 public final class JVoid {
     public static JVoid get() {

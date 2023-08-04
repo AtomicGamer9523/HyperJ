@@ -1,6 +1,6 @@
-package net.hyperj.testing;
+package dev.matveit.hyperj.testing;
 
-import net.hyperj.util.*;
+import dev.matveit.hyperj.util.*;
 
 import org.slf4j.Logger;
 

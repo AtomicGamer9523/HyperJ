@@ -1,9 +1,8 @@
-package net.hyperj;
+package dev.matveit.hyperj;
 
-import static net.hyperj.testing.HyperTesting.*;
-
-import net.hyperj.injections.ReflectInjectorTest;
-import net.hyperj.util.JResultTest;
+import static dev.matveit.hyperj.testing.HyperTesting.*;
+import dev.matveit.hyperj.injections.*;
+import dev.matveit.hyperj.util.*;
 
 public class Tests {
     private static final Testing TESTS = initTesting();

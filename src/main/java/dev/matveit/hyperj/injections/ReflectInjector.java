@@ -1,7 +1,7 @@
-package net.hyperj.injections;
+package dev.matveit.hyperj.injections;
 
-import net.hyperj.util.*;
-import net.hyperj.*;
+import dev.matveit.hyperj.util.*;
+import dev.matveit.hyperj.*;
 
 import java.lang.reflect.*;
 

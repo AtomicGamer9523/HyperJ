@@ -1,4 +1,4 @@
-package net.hyperj.testing;
+package dev.matveit.hyperj.testing;
 
 import java.lang.annotation.*;
 import java.util.*;
