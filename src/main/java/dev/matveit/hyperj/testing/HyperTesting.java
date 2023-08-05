@@ -97,10 +97,19 @@ public class HyperTesting {
 
     /**
      * A simple record to structure all the failed tests (array of {@link FailedTest FailedTest})
-     *
-     * @param failedTests automatically created via {@link Testing#run() Testing.run()}
      */
-    public record TestingResult(FailedTest[] failedTests) {
+    public static final class TestingResult {
+        private final FailedTest[] failedTests;
+
+        /**
+         * constructs a new testing result
+         *
+         * @param failedTests automatically created via {@link Testing#run() Testing.run()}
+         */
+        TestingResult(FailedTest[] failedTests) {
+            this.failedTests = failedTests;
+        }
+
         /**
          * Finishes printing all the failed tests as warnings.
          * Exit code is the amount of tests failed
@@ -138,7 +147,19 @@ public class HyperTesting {
         }
     }
 
-    public record FailedTest(String className, String description, String methodName, Exception reason) {
+    public static final class FailedTest {
+        private final String className;
+        private final String description;
+        private final String methodName;
+        private final Exception reason;
+
+        FailedTest(String className, String description, String methodName, Exception reason) {
+            this.className = className;
+            this.description = description;
+            this.methodName = methodName;
+            this.reason = reason;
+        }
+
         /**
          * Gets the full identification of the failed function
          *

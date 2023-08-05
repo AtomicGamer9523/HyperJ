@@ -9,7 +9,14 @@ import java.util.*;
 
 public class TestingCore {
     static final Logger LOG = LoggerUtil.getLogger(HyperTesting.class);
-    private record Test(Method method, String description) {}
+    private static final class Test {
+        public final Method method;
+        public final String description;
+        Test(Method method, String description) {
+            this.description = description;
+            this.method = method;
+        }
+    }
     static Test[] getTestingMethods(Class<?> clazz) {
         LOG.trace("Adding Tests from class '" + clazz.getName() + "'");
         Method[] methods = clazz.getDeclaredMethods();
